@@ -46,7 +46,6 @@
 
     .logo { font-size: 24px; font-weight: 700; display: flex; align-items: center; gap: 10px;}
     .logo span { color: var(--green); }
-    .sub-logo { font-family: var(--mono); font-size: 10px; color: var(--text-muted); letter-spacing: 1px; margin-top: 4px; text-transform: uppercase;}
     
     .live-tag {
       font-family: var(--mono); font-size: 12px; color: var(--red);
@@ -60,11 +59,13 @@
     .nav-tabs {
       display: flex; border-bottom: 1px solid var(--panel-border); background: var(--bg);
       padding: 0 40px; overflow-x: auto;
+      position: sticky; top: 73px; z-index: 99;
     }
     .tab {
       padding: 15px 20px; font-family: var(--mono); font-size: 12px; color: var(--text-muted);
-      cursor: pointer; border-bottom: 2px solid transparent; letter-spacing: 1px;
+      cursor: pointer; border-bottom: 2px solid transparent; letter-spacing: 1px; white-space: nowrap;
     }
+    .tab:hover { color: #fff; }
     .tab.active { color: var(--green); border-bottom-color: var(--green); }
 
     .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
@@ -184,17 +185,24 @@
   </header>
 
   <div class="nav-tabs">
-    <div class="tab">① THE PROBLEM</div>
-    <div class="tab active">② THE WASTE — LIVE</div>
-    <div class="tab">③ SMART BUFFER ACTIVATES</div>
-    <div class="tab">④ THE 200MS RESPONSE</div>
-    <div class="tab">⑤ ENERGY CAPTURED</div>
-    <div class="tab">⑥ IMPACT & DEPLOYMENT</div>
+    <div class="tab" onclick="scrollToSec('act01', this)">① THE PROBLEM</div>
+    <div class="tab active" onclick="scrollToSec('act02', this)">② THE WASTE — LIVE</div>
+    <div class="tab" onclick="scrollToSec('act03', this)">③ THE SOLUTION</div>
+    <div class="tab" onclick="scrollToSec('act04', this)">④ THE 200MS RESPONSE</div>
+    <div class="tab" onclick="scrollToSec('act05', this)">⑤ ENERGY CAPTURED</div>
+    <div class="tab" onclick="scrollToSec('act06', this)">⑥ IMPACT & DEPLOYMENT</div>
   </div>
 
   <div class="container">
     
+    <!-- ACT 01 -->
+    <div id="act01" style="padding-top: 20px;"></div>
+    <div class="section-title">ACT 01 — THE PROBLEM</div>
+    <h1>The grid is full. The wind is wasted.</h1>
+    <p class="desc">Scotland produces massive amounts of offshore wind energy, but the transmission cables heading south are at maximum capacity. When the grid cannot export the power, wind farms are ordered to shut down, and bill payers are charged millions in "constraint payments" for energy that was never used.</p>
+
     <!-- ACT 02 -->
+    <div id="act02" style="padding-top: 80px;"></div>
     <div class="section-title">ACT 02 — THE WASTE, LIVE</div>
     <h1>Watch the money <span>disappear</span> in real time.</h1>
     <p class="desc">Drag the slider to set the current curtailment level. The counter below shows exactly what is being wasted — every second you watch.</p>
@@ -243,7 +251,7 @@
     </div>
 
     <!-- ACT 03 -->
-    <div style="margin-top: 80px;"></div>
+    <div id="act03" style="padding-top: 80px;"></div>
     <div class="section-title">ACT 03 — THE SOLUTION</div>
     <h1>One container. <span class="green">One signal.</span> The waste stops.</h1>
     <p class="desc">The Smart Buffer Array sits adjacent to Tealing Substation. When curtailment is detected, it becomes the grid's pressure release valve — instantly absorbing surplus energy.</p>
@@ -302,7 +310,7 @@
     </div>
 
     <!-- ACT 04 -->
-    <div style="margin-top: 80px;"></div>
+    <div id="act04" style="padding-top: 80px;"></div>
     <div class="section-title">ACT 04 — THE 200MS RESPONSE</div>
     <h1>Zero voltage shock.</h1>
     <p class="desc">By isolating the load behind a DC intermediate layer, the Smart Buffer initiates a controlled soft ramp-down. The grid protection relays never see a transient spike.</p>
@@ -327,7 +335,7 @@
     </div>
 
     <!-- ACT 05 -->
-    <div style="margin-top: 80px;"></div>
+    <div id="act05" style="padding-top: 80px;"></div>
     <div class="section-title">ACT 05 — ENERGY CAPTURED</div>
     <h1>Wasted wind becomes <span class="green">productive power.</span></h1>
     <p class="desc">The surplus power is intercepted before curtailment and converted into high-density compute and exportable heat — delivered at zero marginal energy cost.</p>
@@ -385,7 +393,7 @@
     </div>
 
     <!-- ACT 06 -->
-    <div style="margin-top: 80px;"></div>
+    <div id="act06" style="padding-top: 80px;"></div>
     <div class="section-title">ACT 06 — IMPACT & DEPLOYMENT</div>
     <h1>The political and financial win.</h1>
     
@@ -526,6 +534,19 @@
       setTimeout(() => steps[1].classList.add('active'), 400);
       setTimeout(() => steps[2].classList.add('active'), 800);
       setTimeout(() => steps[3].classList.add('active'), 1200);
+    }
+
+    // --- Navigation Scroll Logic ---
+    function scrollToSec(id, element) {
+      // Remove active class from all tabs
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      // Add active class to clicked tab
+      element.classList.add('active');
+      // Scroll smoothly to the section
+      const target = document.getElementById(id);
+      if(target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   </script>
 </body>
