@@ -82,7 +82,7 @@
     h1 { font-size: 42px; font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; }
     h1 span { color: var(--red); }
     h1 span.green { color: var(--green); }
-    p.desc { color: var(--text-muted); font-size: 16px; max-width: 600px; margin-bottom: 40px; line-height: 1.5; }
+    p.desc { color: var(--text-muted); font-size: 16px; max-width: 800px; margin-bottom: 40px; line-height: 1.5; }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px;}
     .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-bottom: 40px;}
@@ -206,8 +206,75 @@
     <!-- ACT 01 -->
     <div id="act01" class="act-section active">
       <div class="section-title">ACT 01 — THE PROBLEM</div>
-      <h1>The grid is full. The wind is wasted.</h1>
-      <p class="desc">Scotland produces massive amounts of offshore wind energy, but the transmission cables heading south are at maximum capacity. When the grid cannot export the power, wind farms are ordered to shut down, and bill payers are charged millions in "constraint payments" for energy that was never used.</p>
+      <h1>Scotland generates <span style="color:var(--red)">more wind</span> than the cable can carry.<br>The Smart Buffer <span style="color:var(--green)">absorbs the surplus.</span></h1>
+      <p class="desc">When offshore wind generation exceeds export capacity, curtailment occurs — clean energy goes unused and constraint payments are recovered from consumer bills. The Smart Buffer Array is a controllable demand asset designed to absorb that surplus and convert it into productive output.</p>
+
+      <div class="grid-2">
+        <!-- Left Panel: The Constraint -->
+        <div class="panel">
+          <div class="panel-title">THE TEALING CONSTRAINT - RIGHT NOW</div>
+          
+          <div class="stat">
+            <div class="stat-label">Annual UK Curtailment Cost</div>
+            <div class="stat-value" style="color:var(--red)">£1.46B</div>
+            <div class="stat-sub">paid to wind farms to do nothing</div>
+          </div>
+          
+          <div class="stat" style="margin-top:30px;">
+            <div class="stat-label">Cost Per UK Household Per Year</div>
+            <div class="stat-value" style="color:#ffd166">£52.14</div>
+            <div class="stat-sub">added to every energy bill</div>
+          </div>
+
+          <div class="stat" style="margin-top:30px;">
+            <div class="stat-label">Scottish Wind Curtailed in 2024</div>
+            <div class="stat-value" style="color:var(--red)">6.1 TWh</div>
+            <div class="stat-sub">enough to power 1.8 million homes</div>
+          </div>
+        </div>
+
+        <!-- Right Panel: At a Glance -->
+        <div class="panel">
+          <div class="panel-title">SMART BUFFER ARRAY - AT A GLANCE</div>
+          
+          <div style="background:rgba(0,229,160,0.05); border:1px solid rgba(0,229,160,0.2); padding:20px; border-radius:6px; margin-bottom:20px;">
+            <div style="font-size:10px; color:var(--text-muted); margin-bottom:15px; letter-spacing:1px; text-transform:uppercase;">Deployment</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+              <div>
+                <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Format</div>
+                <div style="font-family:var(--mono); color:#fff; font-size:15px;">20ft High Cube ISO</div>
+              </div>
+              <div>
+                <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Footprint</div>
+                <div style="font-family:var(--mono); color:#fff; font-size:15px;">~160 sq ft</div>
+              </div>
+              <div>
+                <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Timeline</div>
+                <div style="font-family:var(--mono); color:#fff; font-size:15px;">12-18 months</div>
+              </div>
+              <div>
+                <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Capacity</div>
+                <div style="font-family:var(--mono); color:#fff; font-size:15px;">1MW - 1.5MW</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:rgba(0,162,255,0.05); border:1px solid rgba(0,162,255,0.2); padding:20px; border-radius:6px;">
+            <div style="font-size:10px; color:var(--text-muted); margin-bottom:15px; letter-spacing:1px; text-transform:uppercase;">Network Benefit</div>
+            <ul style="list-style:none; padding:0; margin:0; font-size:13px; color:var(--blue); line-height:2;">
+              <li>• Controllable interruptible demand asset</li>
+              <li>• Sub-200ms grid response</li>
+              <li>• NIA fundable — Phase 1 feasibility only</li>
+              <li>• Replicable at any constraint point</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div style="text-align: center; margin-top: 10px;">
+        <button class="btn-toggle active" style="padding: 12px 30px; font-size: 14px; border-radius: 4px; font-weight: bold; cursor: pointer; border: 1px solid var(--green); background: rgba(0,229,160,0.1); color: var(--green);" onclick="showSec('act02', document.querySelectorAll('.tab')[1])">SEE THE LIVE WASTE →</button>
+      </div>
     </div>
 
     <!-- ACT 02 -->
@@ -524,19 +591,14 @@
       setTimeout(() => steps[3].classList.add('active'), 1200);
     }
 
-    // --- NEW: Slide/Tab Logic ---
+    // --- Slide/Tab Logic ---
     function showSec(id, element) {
-      // 1. Remove active class from all top navigation tabs
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      // 2. Add active class to the one you just clicked
       element.classList.add('active');
       
-      // 3. Hide all sections (Acts)
       document.querySelectorAll('.act-section').forEach(s => s.classList.remove('active'));
-      // 4. Show the section you clicked on
       document.getElementById(id).classList.add('active');
       
-      // 5. Scroll back to top just in case they were scrolled down
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
