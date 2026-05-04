@@ -59,7 +59,6 @@
     .nav-tabs {
       display: flex; border-bottom: 1px solid var(--panel-border); background: var(--bg);
       padding: 0 40px; overflow-x: auto;
-      position: sticky; top: 73px; z-index: 99;
     }
     .tab {
       padding: 15px 20px; font-family: var(--mono); font-size: 12px; color: var(--text-muted);
@@ -70,6 +69,15 @@
 
     .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
     
+    /* ACT SECTION HIDING LOGIC */
+    .act-section { display: none; animation: fadeIn 0.4s ease-out; }
+    .act-section.active { display: block; }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .section-title { font-size: 12px; font-family: var(--mono); color: var(--green); letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
     h1 { font-size: 42px; font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; }
     h1 span { color: var(--red); }
@@ -185,233 +193,233 @@
   </header>
 
   <div class="nav-tabs">
-    <div class="tab" onclick="scrollToSec('act01', this)">① THE PROBLEM</div>
-    <div class="tab active" onclick="scrollToSec('act02', this)">② THE WASTE — LIVE</div>
-    <div class="tab" onclick="scrollToSec('act03', this)">③ THE SOLUTION</div>
-    <div class="tab" onclick="scrollToSec('act04', this)">④ THE 200MS RESPONSE</div>
-    <div class="tab" onclick="scrollToSec('act05', this)">⑤ ENERGY CAPTURED</div>
-    <div class="tab" onclick="scrollToSec('act06', this)">⑥ IMPACT & DEPLOYMENT</div>
+    <div class="tab active" onclick="showSec('act01', this)">① THE PROBLEM</div>
+    <div class="tab" onclick="showSec('act02', this)">② THE WASTE — LIVE</div>
+    <div class="tab" onclick="showSec('act03', this)">③ THE SOLUTION</div>
+    <div class="tab" onclick="showSec('act04', this)">④ THE 200MS RESPONSE</div>
+    <div class="tab" onclick="showSec('act05', this)">⑤ ENERGY CAPTURED</div>
+    <div class="tab" onclick="showSec('act06', this)">⑥ IMPACT & DEPLOYMENT</div>
   </div>
 
   <div class="container">
     
     <!-- ACT 01 -->
-    <div id="act01" style="padding-top: 20px;"></div>
-    <div class="section-title">ACT 01 — THE PROBLEM</div>
-    <h1>The grid is full. The wind is wasted.</h1>
-    <p class="desc">Scotland produces massive amounts of offshore wind energy, but the transmission cables heading south are at maximum capacity. When the grid cannot export the power, wind farms are ordered to shut down, and bill payers are charged millions in "constraint payments" for energy that was never used.</p>
+    <div id="act01" class="act-section active">
+      <div class="section-title">ACT 01 — THE PROBLEM</div>
+      <h1>The grid is full. The wind is wasted.</h1>
+      <p class="desc">Scotland produces massive amounts of offshore wind energy, but the transmission cables heading south are at maximum capacity. When the grid cannot export the power, wind farms are ordered to shut down, and bill payers are charged millions in "constraint payments" for energy that was never used.</p>
+    </div>
 
     <!-- ACT 02 -->
-    <div id="act02" style="padding-top: 80px;"></div>
-    <div class="section-title">ACT 02 — THE WASTE, LIVE</div>
-    <h1>Watch the money <span>disappear</span> in real time.</h1>
-    <p class="desc">Drag the slider to set the current curtailment level. The counter below shows exactly what is being wasted — every second you watch.</p>
+    <div id="act02" class="act-section">
+      <div class="section-title">ACT 02 — THE WASTE, LIVE</div>
+      <h1>Watch the money <span>disappear</span> in real time.</h1>
+      <p class="desc">Drag the slider to set the current curtailment level. The counter below shows exactly what is being wasted — every second you watch.</p>
 
-    <div class="grid-2">
-      <div class="panel">
-        <div class="panel-title">GRID CONTROLS</div>
-        
-        <div class="control-group">
-          <div class="slider-header">
-            <span>Wind Generation (MW)</span>
-            <span class="val" id="valWind">1500 MW</span>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title">GRID CONTROLS</div>
+          
+          <div class="control-group">
+            <div class="slider-header">
+              <span>Wind Generation (MW)</span>
+              <span class="val" id="valWind">1500 MW</span>
+            </div>
+            <input type="range" id="slideWind" min="0" max="2000" value="1500" step="10">
           </div>
-          <input type="range" id="slideWind" min="0" max="2000" value="1500" step="10">
-        </div>
 
-        <div class="control-group">
-          <div class="slider-header">
-            <span>Cable Export Limit (MW)</span>
-            <span class="val blue" id="valLimit">1000 MW</span>
+          <div class="control-group">
+            <div class="slider-header">
+              <span>Cable Export Limit (MW)</span>
+              <span class="val blue" id="valLimit">1000 MW</span>
+            </div>
+            <input type="range" id="slideLimit" class="blue-slider" min="0" max="2000" value="1000" step="10">
           </div>
-          <input type="range" id="slideLimit" class="blue-slider" min="0" max="2000" value="1000" step="10">
+
+          <div class="curtailment-box">
+            <div class="label">Curtailed Right Now</div>
+            <div class="big-val" id="valCurt">500 MW</div>
+            <div class="label" style="margin-top:5px;">being paid to sit idle</div>
+          </div>
         </div>
 
-        <div class="curtailment-box">
-          <div class="label">Curtailed Right Now</div>
-          <div class="big-val" id="valCurt">500 MW</div>
-          <div class="label" style="margin-top:5px;">being paid to sit idle</div>
-        </div>
-      </div>
+        <div class="panel">
+          <div class="panel-title">CONSTRAINT PAYMENT BURNING</div>
+          <div class="ticker-val" id="ticker">£0.00</div>
+          <div class="ticker-sub">since you opened this tab</div>
 
-      <div class="panel">
-        <div class="panel-title">CONSTRAINT PAYMENT BURNING</div>
-        <div class="ticker-val" id="ticker">£0.00</div>
-        <div class="ticker-sub">since you opened this tab</div>
-
-        <div class="rate-box">
-          <div class="rate-label">Hourly Rate</div>
-          <div class="rate-num" id="rateHr">£75,000/hr</div>
-        </div>
-        <div class="rate-box">
-          <div class="rate-label">Annual Projection at This Rate</div>
-          <div class="rate-num yellow" id="rateYr">£657.0M</div>
+          <div class="rate-box">
+            <div class="rate-label">Hourly Rate</div>
+            <div class="rate-num" id="rateHr">£75,000/hr</div>
+          </div>
+          <div class="rate-box">
+            <div class="rate-label">Annual Projection at This Rate</div>
+            <div class="rate-num yellow" id="rateYr">£657.0M</div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- ACT 03 -->
-    <div id="act03" style="padding-top: 80px;"></div>
-    <div class="section-title">ACT 03 — THE SOLUTION</div>
-    <h1>One container. <span class="green">One signal.</span> The waste stops.</h1>
-    <p class="desc">The Smart Buffer Array sits adjacent to Tealing Substation. When curtailment is detected, it becomes the grid's pressure release valve — instantly absorbing surplus energy.</p>
+    <div id="act03" class="act-section">
+      <div class="section-title">ACT 03 — THE SOLUTION</div>
+      <h1>One container. <span class="green">One signal.</span> The waste stops.</h1>
+      <p class="desc">The Smart Buffer Array sits adjacent to Tealing Substation. When curtailment is detected, it becomes the grid's pressure release valve — instantly absorbing surplus energy.</p>
 
-    <div class="panel">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div class="panel-title" style="margin:0;">LIVE ENERGY FLOW — TEALING SUBSTATION</div>
-        <div class="toggle-wrap" style="margin:0;">
-          <button class="btn-toggle left active" id="btnOff">WITHOUT BUFFER</button>
-          <button class="btn-toggle right" id="btnOn">WITH BUFFER</button>
+      <div class="panel">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="panel-title" style="margin:0;">LIVE ENERGY FLOW — TEALING SUBSTATION</div>
+          <div class="toggle-wrap" style="margin:0;">
+            <button class="btn-toggle left active" id="btnOff">WITHOUT BUFFER</button>
+            <button class="btn-toggle right" id="btnOn">WITH BUFFER</button>
+          </div>
         </div>
+
+        <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+          <div id="statusBadge" style="display:inline-block; padding:10px 30px; background:#ff3d5a; color:#fff; font-family:var(--mono); border-radius:4px; font-weight:bold; letter-spacing:1px; transition:0.3s;">CURTAILMENT ACTIVE</div>
+        </div>
+
+        <!-- Flow SVG -->
+        <svg width="100%" height="300" viewBox="0 0 1000 300" style="background:transparent;">
+          <line id="lineIn" x1="180" y1="120" x2="420" y2="120" stroke="#00a2ff" class="line-flow"/>
+          <text x="300" y="110" fill="#8b9bb4" font-size="10" text-anchor="middle" font-family="Share Tech Mono">TRANSMISSION</text>
+          
+          <line id="lineOut" x1="580" y1="120" x2="820" y2="120" stroke="#ff3d5a" class="line-flow"/>
+          <text x="700" y="110" fill="#8b9bb4" font-size="10" text-anchor="middle" font-family="Share Tech Mono">400MW LIMIT</text>
+
+          <line id="lineDrop" x1="500" y1="180" x2="500" y2="240" stroke="#ff3d5a" class="line-flow"/>
+
+          <rect x="100" y="70" width="160" height="100" class="node-box" />
+          <text x="180" y="100" text-anchor="middle" class="node-text-title">OFFSHORE</text>
+          <text x="180" y="120" text-anchor="middle" class="node-text-title">WIND FARM</text>
+          <text x="180" y="145" text-anchor="middle" class="node-text-val">800 MW</text>
+          <text x="180" y="160" text-anchor="middle" class="node-text-sub">GENERATING</text>
+
+          <rect x="420" y="70" width="160" height="100" class="node-box" />
+          <text x="500" y="110" text-anchor="middle" class="node-text-title">TEALING</text>
+          <text x="500" y="130" text-anchor="middle" class="node-text-title">SUBSTATION</text>
+          <text id="subText" x="500" y="155" text-anchor="middle" fill="#ffc107" font-size="12" font-family="Share Tech Mono" font-weight="bold">CONSTRAINT</text>
+
+          <rect x="740" y="70" width="160" height="100" class="node-box" />
+          <text x="820" y="105" text-anchor="middle" class="node-text-title">UK GRID</text>
+          <text x="820" y="135" text-anchor="middle" class="node-text-val">400 MW</text>
+          <text x="820" y="150" text-anchor="middle" class="node-text-sub">EXPORTED</text>
+          <text x="820" y="165" text-anchor="middle" class="node-text-sub">SOUTH</text>
+
+          <rect id="bufferBox" x="400" y="220" width="200" height="60" fill="rgba(255,61,90,0.05)" stroke="#ff3d5a" stroke-width="2" rx="4" />
+          <text id="bufferTitle" x="500" y="240" fill="#ff3d5a" font-size="14" font-weight="bold" text-anchor="middle" font-family="Share Tech Mono">⚠ WASTED ENERGY</text>
+          <text id="bufferSub1" x="500" y="258" fill="#ff3d5a" font-size="12" text-anchor="middle" font-family="Share Tech Mono">400 MW CURTAILED</text>
+          <text id="bufferSub2" x="500" y="272" fill="#8b9bb4" font-size="10" text-anchor="middle" font-family="Share Tech Mono">£60,000/hr constraint payment</text>
+        </svg>
       </div>
-
-      <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
-        <div id="statusBadge" style="display:inline-block; padding:10px 30px; background:#ff3d5a; color:#fff; font-family:var(--mono); border-radius:4px; font-weight:bold; letter-spacing:1px; transition:0.3s;">CURTAILMENT ACTIVE</div>
-      </div>
-
-      <!-- Flow SVG -->
-      <svg width="100%" height="300" viewBox="0 0 1000 300" style="background:transparent;">
-        <!-- Lines -->
-        <line id="lineIn" x1="180" y1="120" x2="420" y2="120" stroke="#00a2ff" class="line-flow"/>
-        <text x="300" y="110" fill="#8b9bb4" font-size="10" text-anchor="middle" font-family="Share Tech Mono">TRANSMISSION</text>
-        
-        <line id="lineOut" x1="580" y1="120" x2="820" y2="120" stroke="#ff3d5a" class="line-flow"/>
-        <text x="700" y="110" fill="#8b9bb4" font-size="10" text-anchor="middle" font-family="Share Tech Mono">400MW LIMIT</text>
-
-        <line id="lineDrop" x1="500" y1="180" x2="500" y2="240" stroke="#ff3d5a" class="line-flow"/>
-
-        <!-- Nodes -->
-        <!-- Wind Farm -->
-        <rect x="100" y="70" width="160" height="100" class="node-box" />
-        <text x="180" y="100" text-anchor="middle" class="node-text-title">OFFSHORE</text>
-        <text x="180" y="120" text-anchor="middle" class="node-text-title">WIND FARM</text>
-        <text x="180" y="145" text-anchor="middle" class="node-text-val">800 MW</text>
-        <text x="180" y="160" text-anchor="middle" class="node-text-sub">GENERATING</text>
-
-        <!-- Substation -->
-        <rect x="420" y="70" width="160" height="100" class="node-box" />
-        <text x="500" y="110" text-anchor="middle" class="node-text-title">TEALING</text>
-        <text x="500" y="130" text-anchor="middle" class="node-text-title">SUBSTATION</text>
-        <text id="subText" x="500" y="155" text-anchor="middle" fill="#ffc107" font-size="12" font-family="Share Tech Mono" font-weight="bold">CONSTRAINT</text>
-
-        <!-- Grid -->
-        <rect x="740" y="70" width="160" height="100" class="node-box" />
-        <text x="820" y="105" text-anchor="middle" class="node-text-title">UK GRID</text>
-        <text x="820" y="135" text-anchor="middle" class="node-text-val">400 MW</text>
-        <text x="820" y="150" text-anchor="middle" class="node-text-sub">EXPORTED</text>
-        <text x="820" y="165" text-anchor="middle" class="node-text-sub">SOUTH</text>
-
-        <!-- Buffer / Waste Box -->
-        <rect id="bufferBox" x="400" y="220" width="200" height="60" fill="rgba(255,61,90,0.05)" stroke="#ff3d5a" stroke-width="2" rx="4" />
-        <text id="bufferTitle" x="500" y="240" fill="#ff3d5a" font-size="14" font-weight="bold" text-anchor="middle" font-family="Share Tech Mono">⚠ WASTED ENERGY</text>
-        <text id="bufferSub1" x="500" y="258" fill="#ff3d5a" font-size="12" text-anchor="middle" font-family="Share Tech Mono">400 MW CURTAILED</text>
-        <text id="bufferSub2" x="500" y="272" fill="#8b9bb4" font-size="10" text-anchor="middle" font-family="Share Tech Mono">£60,000/hr constraint payment</text>
-      </svg>
     </div>
 
     <!-- ACT 04 -->
-    <div id="act04" style="padding-top: 80px;"></div>
-    <div class="section-title">ACT 04 — THE 200MS RESPONSE</div>
-    <h1>Zero voltage shock.</h1>
-    <p class="desc">By isolating the load behind a DC intermediate layer, the Smart Buffer initiates a controlled soft ramp-down. The grid protection relays never see a transient spike.</p>
-    
-    <div class="timeline" id="timeline">
-      <div class="tl-step">
-        <div class="tl-time">T+0ms</div>
-        <div class="tl-label">Curtailment signal received</div>
-      </div>
-      <div class="tl-step">
-        <div class="tl-time">T+12ms</div>
-        <div class="tl-label">High-Speed Industrial PLC processes signal</div>
-      </div>
-      <div class="tl-step">
-        <div class="tl-time">T+85ms</div>
-        <div class="tl-label">DC buffer layer isolates load</div>
-      </div>
-      <div class="tl-step">
-        <div class="tl-time"><200ms</div>
-        <div class="tl-label">Full load transfer complete. Smooth AC ramp down.</div>
+    <div id="act04" class="act-section">
+      <div class="section-title">ACT 04 — THE 200MS RESPONSE</div>
+      <h1>Zero voltage shock.</h1>
+      <p class="desc">By isolating the load behind a DC intermediate layer, the Smart Buffer initiates a controlled soft ramp-down. The grid protection relays never see a transient spike.</p>
+      
+      <div class="timeline" id="timeline">
+        <div class="tl-step">
+          <div class="tl-time">T+0ms</div>
+          <div class="tl-label">Curtailment signal received</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time">T+12ms</div>
+          <div class="tl-label">High-Speed Industrial PLC processes signal</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time">T+85ms</div>
+          <div class="tl-label">DC buffer layer isolates load</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time"><200ms</div>
+          <div class="tl-label">Full load transfer complete. Smooth AC ramp down.</div>
+        </div>
       </div>
     </div>
 
     <!-- ACT 05 -->
-    <div id="act05" style="padding-top: 80px;"></div>
-    <div class="section-title">ACT 05 — ENERGY CAPTURED</div>
-    <h1>Wasted wind becomes <span class="green">productive power.</span></h1>
-    <p class="desc">The surplus power is intercepted before curtailment and converted into high-density compute and exportable heat — delivered at zero marginal energy cost.</p>
+    <div id="act05" class="act-section">
+      <div class="section-title">ACT 05 — ENERGY CAPTURED</div>
+      <h1>Wasted wind becomes <span class="green">productive power.</span></h1>
+      <p class="desc">The surplus power is intercepted before curtailment and converted into high-density compute and exportable heat — delivered at zero marginal energy cost.</p>
 
-    <div class="grid-3">
-      <div class="panel">
-        <div class="panel-title">INPUT</div>
-        <div class="stat">
-          <div class="stat-label">Curtailed Wind Absorbed</div>
-          <div class="stat-value green">1 MW</div>
-          <div class="stat-sub">maximum per container</div>
+      <div class="grid-3">
+        <div class="panel">
+          <div class="panel-title">INPUT</div>
+          <div class="stat">
+            <div class="stat-label">Curtailed Wind Absorbed</div>
+            <div class="stat-value green">1 MW</div>
+            <div class="stat-sub">maximum per container</div>
+          </div>
+          <div class="stat" style="margin-top:30px;">
+            <div class="stat-label">Marginal Energy Cost</div>
+            <div class="stat-value green">£0.00</div>
+            <div class="stat-sub">the electricity is free surplus</div>
+          </div>
         </div>
-        <div class="stat" style="margin-top:30px;">
-          <div class="stat-label">Marginal Energy Cost</div>
-          <div class="stat-value green">£0.00</div>
-          <div class="stat-sub">the electricity is free surplus</div>
+
+        <div class="panel">
+          <div class="panel-title">OUTPUT 1 - COMPUTE</div>
+          <div class="stat">
+            <div class="stat-label">Hardware</div>
+            <div class="stat-value blue" style="font-size:24px;">High-Density Compute</div>
+            <div class="stat-sub">immersion-cooled processing array</div>
+          </div>
+          <div class="stat" style="margin-top:30px;">
+            <div class="stat-label">Primary Workload</div>
+            <div class="stat-value blue" style="font-size:20px;">NHS Diagnostic AI</div>
+            <div class="stat-sub">MRI, CT scan, mammography inference</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">OUTPUT 2 - DISTRICT HEAT</div>
+          <div class="stat">
+            <div class="stat-label">Thermal Output Temperature</div>
+            <div class="stat-value" style="color:#ffd166;">65°C</div>
+            <div class="stat-sub">dual loop hydronic fluid exchange</div>
+          </div>
+          <div class="stat" style="margin-top:30px;">
+            <div class="stat-label">Thermal Off-take</div>
+            <div class="stat-value green" style="font-size:20px;">Exportable Heat</div>
+            <div class="stat-sub">available for commercial or agricultural integration</div>
+          </div>
         </div>
       </div>
 
-      <div class="panel">
-        <div class="panel-title">OUTPUT 1 - COMPUTE</div>
-        <div class="stat">
-          <div class="stat-label">Hardware</div>
-          <div class="stat-value blue" style="font-size:24px;">High-Density Compute</div>
-          <div class="stat-sub">immersion-cooled processing array</div>
-        </div>
-        <div class="stat" style="margin-top:30px;">
-          <div class="stat-label">Primary Workload</div>
-          <div class="stat-value blue" style="font-size:20px;">NHS Diagnostic AI</div>
-          <div class="stat-sub">MRI, CT scan, mammography inference</div>
-        </div>
+      <div class="specs-strip">
+        <div class="spec-item"><div class="label">Format</div><div class="val">20ft High Cube ISO</div></div>
+        <div class="spec-item"><div class="label">Footprint</div><div class="val">~160 sq ft</div></div>
+        <div class="spec-item"><div class="label">Capacity</div><div class="val">1MW - 1.5MW</div></div>
+        <div class="spec-item"><div class="label">HV Transformer</div><div class="val">External pad</div></div>
+        <div class="spec-item"><div class="label">Feed into container</div><div class="val">415V only</div></div>
       </div>
-
-      <div class="panel">
-        <div class="panel-title">OUTPUT 2 - DISTRICT HEAT</div>
-        <div class="stat">
-          <div class="stat-label">Thermal Output Temperature</div>
-          <div class="stat-value" style="color:#ffd166;">65°C</div>
-          <div class="stat-sub">dual loop hydronic fluid exchange</div>
-        </div>
-        <div class="stat" style="margin-top:30px;">
-          <div class="stat-label">Thermal Off-take</div>
-          <div class="stat-value green" style="font-size:20px;">Exportable Heat</div>
-          <div class="stat-sub">available for commercial or agricultural integration</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="specs-strip">
-      <div class="spec-item"><div class="label">Format</div><div class="val">20ft High Cube ISO</div></div>
-      <div class="spec-item"><div class="label">Footprint</div><div class="val">~160 sq ft</div></div>
-      <div class="spec-item"><div class="label">Capacity</div><div class="val">1MW - 1.5MW</div></div>
-      <div class="spec-item"><div class="label">HV Transformer</div><div class="val">External pad</div></div>
-      <div class="spec-item"><div class="label">Feed into container</div><div class="val">415V only</div></div>
     </div>
 
     <!-- ACT 06 -->
-    <div id="act06" style="padding-top: 80px;"></div>
-    <div class="section-title">ACT 06 — IMPACT & DEPLOYMENT</div>
-    <h1>The political and financial win.</h1>
-    
-    <div class="grid-3" style="margin-top: 30px;">
-      <div class="metric-card green">
-        <div class="mc-label">Annual NHS Compute Value</div>
-        <div class="mc-val" style="color:var(--green)">£4.38M</div>
-        <div class="mc-sub">per 1MW container per year</div>
-      </div>
-      <div class="metric-card green">
-        <div class="mc-label">Bill Payer Saving</div>
-        <div class="mc-val" style="color:var(--green)">£52/yr</div>
-        <div class="mc-sub">per household if fully deployed</div>
-      </div>
-      <div class="metric-card blue">
-        <div class="mc-label">Phase 1 Ask (NIA)</div>
-        <div class="mc-val" style="color:var(--blue)">£150k</div>
-        <div class="mc-sub">feasibility study only — no deployment</div>
+    <div id="act06" class="act-section">
+      <div class="section-title">ACT 06 — IMPACT & DEPLOYMENT</div>
+      <h1>The political and financial win.</h1>
+      
+      <div class="grid-3" style="margin-top: 30px;">
+        <div class="metric-card green">
+          <div class="mc-label">Annual NHS Compute Value</div>
+          <div class="mc-val" style="color:var(--green)">£4.38M</div>
+          <div class="mc-sub">per 1MW container per year</div>
+        </div>
+        <div class="metric-card green">
+          <div class="mc-label">Bill Payer Saving</div>
+          <div class="mc-val" style="color:var(--green)">£52/yr</div>
+          <div class="mc-sub">per household if fully deployed</div>
+        </div>
+        <div class="metric-card blue">
+          <div class="mc-label">Phase 1 Ask (NIA)</div>
+          <div class="mc-val" style="color:var(--blue)">£150k</div>
+          <div class="mc-sub">feasibility study only — no deployment</div>
+        </div>
       </div>
     </div>
 
@@ -429,7 +437,7 @@
     const ticker = document.getElementById('ticker');
 
     let totalBurn = 0;
-    const pricePerMWh = 150; // £150 per MWh
+    const pricePerMWh = 150; 
 
     function updateMath() {
       let w = parseInt(slideWind.value);
@@ -444,7 +452,7 @@
       let costHr = curt * pricePerMWh;
       rateHr.innerText = "£" + costHr.toLocaleString() + "/hr";
       
-      let costYr = (costHr * 8760) / 1000000; // millions
+      let costYr = (costHr * 8760) / 1000000; 
       rateYr.innerText = "£" + costYr.toFixed(1) + "M";
     }
 
@@ -452,7 +460,6 @@
     slideLimit.addEventListener('input', updateMath);
     updateMath();
 
-    // Ticker loop
     setInterval(() => {
       let w = parseInt(slideWind.value);
       let l = parseInt(slideLimit.value);
@@ -468,11 +475,8 @@
     const btnOff = document.getElementById('btnOff');
     const btnOn = document.getElementById('btnOn');
     const statusBadge = document.getElementById('statusBadge');
-    
-    // SVG Elements
     const lineOut = document.getElementById('lineOut');
     const lineDrop = document.getElementById('lineDrop');
-    const subText = document.getElementById('subText');
     const bufferBox = document.getElementById('bufferBox');
     const bufferTitle = document.getElementById('bufferTitle');
     const bufferSub1 = document.getElementById('bufferSub1');
@@ -481,72 +485,59 @@
     btnOff.addEventListener('click', () => {
       btnOff.classList.add('active');
       btnOn.classList.remove('active');
-      
       statusBadge.innerText = "CURTAILMENT ACTIVE";
       statusBadge.style.background = "var(--red)";
-
       lineOut.setAttribute('stroke', '#ff3d5a');
       lineDrop.setAttribute('stroke', '#ff3d5a');
-      
       bufferBox.setAttribute('stroke', '#ff3d5a');
       bufferBox.setAttribute('fill', 'rgba(255,61,90,0.05)');
-      
       bufferTitle.setAttribute('fill', '#ff3d5a');
       bufferTitle.textContent = "⚠ WASTED ENERGY";
-      
       bufferSub1.setAttribute('fill', '#ff3d5a');
       bufferSub1.textContent = "400 MW CURTAILED";
-      
       bufferSub2.textContent = "£60,000/hr constraint payment";
     });
 
     btnOn.addEventListener('click', () => {
       btnOn.classList.add('active');
       btnOff.classList.remove('active');
-      
       statusBadge.innerText = "BUFFER ENGAGED";
       statusBadge.style.background = "var(--green)";
-
       lineOut.setAttribute('stroke', '#00a2ff');
       lineDrop.setAttribute('stroke', '#00e5a0');
-      
       bufferBox.setAttribute('stroke', '#00e5a0');
       bufferBox.setAttribute('fill', 'rgba(0,229,160,0.05)');
-      
       bufferTitle.setAttribute('fill', '#00e5a0');
       bufferTitle.textContent = "✓ SMART BUFFER ACTIVE";
-      
       bufferSub1.setAttribute('fill', '#fff');
       bufferSub1.textContent = "NHS AI INFERENCE RUNNING";
-      
       bufferSub2.textContent = "Generating 65°C district heat";
-      
-      // Trigger timeline animation
       runTimeline();
     });
 
-    // --- Timeline Animation ---
     function runTimeline() {
       const steps = document.querySelectorAll('.tl-step');
       steps.forEach(s => s.classList.remove('active'));
-      
       setTimeout(() => steps[0].classList.add('active'), 0);
       setTimeout(() => steps[1].classList.add('active'), 400);
       setTimeout(() => steps[2].classList.add('active'), 800);
       setTimeout(() => steps[3].classList.add('active'), 1200);
     }
 
-    // --- Navigation Scroll Logic ---
-    function scrollToSec(id, element) {
-      // Remove active class from all tabs
+    // --- NEW: Slide/Tab Logic ---
+    function showSec(id, element) {
+      // 1. Remove active class from all top navigation tabs
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      // Add active class to clicked tab
+      // 2. Add active class to the one you just clicked
       element.classList.add('active');
-      // Scroll smoothly to the section
-      const target = document.getElementById(id);
-      if(target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
+      
+      // 3. Hide all sections (Acts)
+      document.querySelectorAll('.act-section').forEach(s => s.classList.remove('active'));
+      // 4. Show the section you clicked on
+      document.getElementById(id).classList.add('active');
+      
+      // 5. Scroll back to top just in case they were scrolled down
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 </body>
