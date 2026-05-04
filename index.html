@@ -30,6 +30,7 @@
                         linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
       background-size: 30px 30px;
       padding-bottom: 100px;
+      overflow-x: hidden;
     }
 
     header {
@@ -81,7 +82,7 @@
     h1 { font-size: 42px; font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; }
     h1 span { color: var(--red); }
     h1 span.green { color: var(--green); }
-    p.desc { color: var(--text-muted); font-size: 16px; max-width: 600px; margin-bottom: 40px; line-height: 1.5; }
+    p.desc { color: var(--text-muted); font-size: 16px; max-width: 700px; margin-bottom: 40px; line-height: 1.5; }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px;}
     .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-bottom: 40px;}
@@ -122,8 +123,11 @@
     .btn-toggle {
       background: transparent; border: 1px solid var(--panel-border); color: var(--text-muted);
       padding: 10px 20px; font-family: var(--mono); font-size: 12px; cursor: pointer;
+      transition: 0.2s;
     }
     .btn-toggle.active { background: rgba(0,229,160,0.1); border-color: var(--green); color: var(--green); }
+    .btn-toggle.left { border-radius: 4px 0 0 4px; }
+    .btn-toggle.right { border-radius: 0 4px 4px 0; border-left: none; }
 
     .node-box { fill: #0d1623; stroke: #1a273b; stroke-width: 2; rx: 6; }
     .node-text-title { fill: #fff; font-size: 14px; font-weight: bold; }
@@ -131,7 +135,15 @@
     @keyframes flow { to { stroke-dashoffset: -20; } }
 
     .specs-strip { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 8px; padding: 20px 30px; display: flex; justify-content: space-between; margin-top: 20px;}
+    .spec-item .label { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; }
+    .spec-item .val { font-family: var(--mono); font-size: 14px; color: #fff; }
+
     .metric-card { border: 1px solid var(--panel-border); background: var(--panel); padding: 25px; border-radius: 8px; text-align: center;}
+    .metric-card.green { border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.05); }
+    .metric-card.blue { border-color: rgba(0,162,255,0.3); background: rgba(0,162,255,0.05); }
+    .mc-label { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase;}
+    .mc-val { font-family: var(--mono); font-size: 36px; font-weight: 700; margin-bottom: 5px; }
+    .mc-sub { font-size: 12px; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -156,7 +168,7 @@
     <div id="act01" class="act-section active">
       <div class="section-title">ACT 01 — THE PROBLEM</div>
       <h1>Scotland generates <span style="color:var(--red)">more wind</span> than the cable can carry.<br>The Smart Buffer <span style="color:var(--green)">absorbs the surplus.</span></h1>
-      <p class="desc">When offshore wind generation exceeds export capacity, curtailment occurs — clean energy goes unused and constraint payments are recovered from consumer bills.</p>
+      <p class="desc">When offshore wind generation exceeds export capacity, curtailment occurs—clean energy goes unused and constraint payments are recovered from consumer bills.</p>
 
       <div class="grid-2">
         <div class="panel">
@@ -174,6 +186,7 @@
           <div class="stat" style="margin-top:30px;">
             <div class="stat-label">Scottish Wind Curtailed in 2024</div>
             <div class="stat-value" style="color:var(--red)">6.1 TWh</div>
+            <div class="stat-sub">enough to power 1.8 million homes</div>
           </div>
         </div>
 
@@ -181,10 +194,10 @@
           <div class="panel-title">SMART BUFFER ARRAY - AT A GLANCE</div>
           <div style="background:rgba(0,229,160,0.05); border:1px solid rgba(0,229,160,0.2); padding:20px; border-radius:6px; margin-bottom:20px;">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-              <div><div style="font-size:11px; color:var(--text-muted);">Format</div><div style="font-family:var(--mono); color:#fff;">20ft High Cube ISO</div></div>
-              <div><div style="font-size:11px; color:var(--text-muted);">Footprint</div><div style="font-family:var(--mono); color:#fff;">~160 sq ft</div></div>
-              <div><div style="font-size:11px; color:var(--text-muted);">Timeline</div><div style="font-family:var(--mono); color:#fff;">12-18 months</div></div>
-              <div><div style="font-size:11px; color:var(--text-muted);">Capacity</div><div style="font-family:var(--mono); color:#fff;">1MW - 1.5MW</div></div>
+              <div><div style="font-size:11px; color:var(--text-muted);">Format</div><div style="font-family:var(--mono); color:#fff; font-size:15px;">20ft High Cube ISO</div></div>
+              <div><div style="font-size:11px; color:var(--text-muted);">Footprint</div><div style="font-family:var(--mono); color:#fff; font-size:15px;">~160 sq ft</div></div>
+              <div><div style="font-size:11px; color:var(--text-muted);">Timeline</div><div style="font-family:var(--mono); color:#fff; font-size:15px;">12-18 months</div></div>
+              <div><div style="font-size:11px; color:var(--text-muted);">Capacity</div><div style="font-family:var(--mono); color:#fff; font-size:15px;">1MW - 1.5MW</div></div>
             </div>
           </div>
           <div style="background:rgba(0,162,255,0.05); border:1px solid rgba(0,162,255,0.2); padding:20px; border-radius:6px;">
@@ -204,6 +217,7 @@
     <div id="act02" class="act-section">
       <div class="section-title">ACT 02 — THE WASTE, LIVE</div>
       <h1>Watch the money <span>disappear</span> in real time.</h1>
+      <p class="desc">Drag the slider to set the current curtailment level. The counter below shows exactly what is being wasted—every second you watch.</p>
       <div class="grid-2">
         <div class="panel">
           <div class="panel-title">GRID CONTROLS</div>
@@ -218,9 +232,13 @@
           <div class="curtailment-box"><div class="stat-label">Curtailed Right Now</div><div class="stat-value" id="valCurt" style="color:var(--red)">500 MW</div></div>
         </div>
         <div class="panel">
-          <div class="panel-title">PAYMENT BURNING</div>
+          <div class="panel-title">CONSTRAINT PAYMENT BURNING</div>
           <div class="ticker-val" id="ticker">£0.00</div>
           <div style="text-align:center; color:var(--text-muted);">since you opened this tab</div>
+          <div style="margin-top:30px; border-top:1px solid var(--panel-border); padding-top:20px;">
+            <div style="font-size:11px; color:var(--text-muted);">Hourly Rate: <span id="rateHr" style="color:var(--red); font-family:var(--mono);">£75,000/hr</span></div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:5px;">Annual Rate: <span id="rateYr" style="color:#ffd166; font-family:var(--mono);">£657.0M</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -229,8 +247,12 @@
     <div id="act03" class="act-section">
       <div class="section-title">ACT 03 — THE SOLUTION</div>
       <h1>One container. <span class="green">The waste stops.</span></h1>
+      <p class="desc">The Smart Buffer Array becomes the grid's pressure release valve—instantly absorbing surplus energy.</p>
       <div class="panel">
-        <div style="display:flex; justify-content:flex-end;"><button class="btn-toggle left active" id="btnOff">WITHOUT BUFFER</button><button class="btn-toggle right" id="btnOn">WITH BUFFER</button></div>
+        <div style="display:flex; justify-content:flex-end; margin-bottom:20px;">
+            <button class="btn-toggle left active" id="btnOff">WITHOUT BUFFER</button>
+            <button class="btn-toggle right" id="btnOn">WITH BUFFER</button>
+        </div>
         <svg width="100%" height="250" viewBox="0 0 1000 250">
           <line id="lineIn" x1="180" y1="100" x2="420" y2="100" stroke="#00a2ff" class="line-flow"/>
           <line id="lineOut" x1="580" y1="100" x2="820" y2="100" stroke="#ff3d5a" class="line-flow"/>
@@ -245,37 +267,42 @@
     <!-- ACT 04 -->
     <div id="act04" class="act-section">
       <div class="section-title">ACT 04 — THE 200MS RESPONSE</div>
-      <h1>Zero voltage shock.</h1>
+      <h1>Faster than a protection relay. <br><span class="green">Zero voltage shock to the network.</span></h1>
+      <p class="desc">The High-Speed Industrial PLC receives the signal and transfers the 1MW load to the DC buffer layer, preventing transient voltage spikes.</p>
       <div class="grid-2">
         <div class="panel">
-          <div class="panel-title">RESPONSE SEQUENCE</div>
+          <div class="panel-title">RESPONSE SEQUENCE - CLICK TO SIMULATE</div>
           <div style="display:flex; justify-content:space-between; gap:10px; margin-bottom:20px;">
-            <div style="flex:1; border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:4px;">
-              <div style="font-family:var(--mono); color:#fff; font-weight:bold;">T+0ms</div><div style="font-size:9px;">Signal received</div>
+            <div style="flex:1; border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:4px; background:rgba(255,255,255,0.02);">
+              <div style="font-family:var(--mono); color:#fff; font-weight:bold;">T+0ms</div><div style="font-size:10px; color:var(--text-muted);">Signal received</div>
             </div>
-            <div style="flex:1; border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:4px;">
-              <div style="font-family:var(--mono); color:#fff; font-weight:bold;">T+12ms</div><div style="font-size:9px;">Industrial PLC</div>
+            <div style="flex:1; border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:4px; background:rgba(255,255,255,0.02);">
+              <div style="font-family:var(--mono); color:#fff; font-weight:bold;">T+12ms</div><div style="font-size:10px; color:var(--text-muted);">Industrial PLC</div>
             </div>
-            <div style="flex:1; border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:4px;">
-              <div style="font-family:var(--mono); color:#fff; font-weight:bold;">T+85ms</div><div style="font-size:9px;">DC Isolation</div>
+            <div style="flex:1; border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:4px; background:rgba(255,255,255,0.02);">
+              <div style="font-family:var(--mono); color:#fff; font-weight:bold;">T+85ms</div><div style="font-size:10px; color:var(--text-muted);">DC Isolation</div>
             </div>
-            <div style="flex:1; border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:4px;">
-              <div style="font-family:var(--mono); color:#fff; font-weight:bold;">&lt;200ms</div><div style="font-size:9px;">Complete</div>
+            <div style="flex:1; border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:4px; background:rgba(255,255,255,0.02);">
+              <div style="font-family:var(--mono); color:#fff; font-weight:bold;">&lt;200ms</div><div style="font-size:10px; color:var(--text-muted);">Complete</div>
             </div>
           </div>
-          <button id="btnTrigger" style="width:100%; padding:12px; background:rgba(0,229,160,0.1); border:1px solid var(--green); color:var(--green); font-family:var(--mono); font-weight:bold; cursor:pointer;">▶ TRIGGER CURTAILMENT SIGNAL</button>
-          <div style="width:100%; height:10px; background:rgba(255,255,255,0.1); border-radius:5px; margin-top:20px; overflow:hidden;">
-            <div id="transferBar" style="height:100%; width:0%; background:var(--green); transition:width 1.5s ease-out;"></div>
+          <button id="btnTrigger" style="width:100%; padding:12px; background:rgba(0,229,160,0.1); border:1px solid var(--green); color:var(--green); font-family:var(--mono); font-weight:bold; cursor:pointer; transition:0.3s;">▶ TRIGGER CURTAILMENT SIGNAL</button>
+          <div style="width:100%; height:12px; background:rgba(255,255,255,0.05); border-radius:6px; margin-top:20px; overflow:hidden;">
+            <div id="transferBar" style="height:100%; width:0%; background:linear-gradient(90deg, var(--blue), var(--green)); transition:width 1.5s ease-out;"></div>
           </div>
         </div>
         <div class="panel">
-          <div class="panel-title">WHY IT MATTERS</div>
-          <div style="margin-bottom:15px; font-size:12px; color:var(--red);">⚡ Hard disconnect causes transients.</div>
-          <div style="margin-bottom:20px; font-size:12px; color:var(--green);">✓ DC isolation allows soft ramp-down.</div>
-          <div style="font-size:11px;">Standard disconnect risk: <span style="color:var(--red)">HIGH</span></div>
-          <div style="width:100%; height:4px; background:var(--red); margin-bottom:15px;"></div>
-          <div style="font-size:11px;">Smart Buffer risk: <span style="color:var(--green)">ZERO</span></div>
-          <div style="width:5%; height:4px; background:var(--green);"></div>
+          <div class="panel-title">WHY IT MATTERS TO THE NETWORK</div>
+          <div style="background:rgba(255,61,90,0.05); border:1px solid rgba(255,61,90,0.2); padding:15px; border-radius:4px; margin-bottom:15px; font-family:var(--mono); font-size:12px; color:var(--red);">⚡ Hard disconnect causes transient spikes.</div>
+          <div style="background:rgba(0,229,160,0.05); border:1px solid rgba(0,229,160,0.2); padding:15px; border-radius:4px; margin-bottom:25px; font-family:var(--mono); font-size:12px; color:var(--green);">✓ Smart Buffer allows zero-transient ramp-down.</div>
+          <div style="margin-bottom:15px;">
+            <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;"><span>Standard Disconnect Risk</span><span style="color:var(--red)">HIGH</span></div>
+            <div style="width:100%; height:6px; background:var(--red); border-radius:3px;"></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;"><span>Smart Buffer Risk</span><span style="color:var(--green)">ZERO</span></div>
+            <div style="width:5%; height:6px; background:var(--green); border-radius:3px;"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -284,27 +311,36 @@
     <div id="act05" class="act-section">
       <div class="section-title">ACT 05 — ENERGY CAPTURED</div>
       <h1>Wasted wind becomes <span class="green">productive.</span></h1>
+      <p class="desc">Surplus power is converted into high-density compute and exportable heat at zero marginal energy cost.</p>
       <div class="grid-3">
-        <div class="panel"><div class="panel-title">INPUT</div><div class="stat-value green">1 MW</div><div class="stat-label">Surplus Wind</div></div>
-        <div class="panel"><div class="panel-title">COMPUTE</div><div class="stat-value blue" style="font-size:24px;">NHS AI</div><div class="stat-label">High-Density Compute</div></div>
-        <div class="panel"><div class="panel-title">HEAT</div><div class="stat-value" style="color:#ffd166">65°C</div><div class="stat-label">Exportable Heat</div></div>
+        <div class="panel"><div class="panel-title">INPUT</div><div class="stat-value green">1 MW</div><div class="stat-label">Maximum surplus absorbed</div></div>
+        <div class="panel"><div class="panel-title">COMPUTE</div><div class="stat-value blue" style="font-size:24px;">High-Density Compute</div><div class="stat-label">NHS Diagnostic AI workload</div></div>
+        <div class="panel"><div class="panel-title">HEAT</div><div class="stat-value" style="color:#ffd166">65°C</div><div class="stat-label">Exportable heat output</div></div>
+      </div>
+      <div class="specs-strip">
+        <div class="spec-item"><div class="label">Format</div><div class="val">20ft High Cube ISO</div></div>
+        <div class="spec-item"><div class="label">Footprint</div><div class="val">~160 sq ft</div></div>
+        <div class="spec-item"><div class="label">Capacity</div><div class="val">1MW - 1.5MW</div></div>
+        <div class="spec-item"><div class="label">HV Transformer</div><div class="val">External pad</div></div>
+        <div class="spec-item"><div class="label">Feed Input</div><div class="val">415V only</div></div>
       </div>
     </div>
 
     <!-- ACT 06 -->
     <div id="act06" class="act-section">
       <div class="section-title">ACT 06 — IMPACT & DEPLOYMENT</div>
-      <div class="grid-3">
-        <div class="metric-card green"><div class="stat-label">NHS AI Value</div><div class="stat-value">£4.38M/yr</div></div>
-        <div class="metric-card green"><div class="stat-label">Payer Saving</div><div class="stat-value">£52/yr</div></div>
-        <div class="metric-card blue"><div class="stat-label">Phase 1 Ask</div><div class="stat-value">£150k</div></div>
+      <h1>The political and financial win.</h1>
+      <div class="grid-3" style="margin-top:30px;">
+        <div class="metric-card green"><div class="mc-label">NHS AI Value</div><div class="mc-val" style="color:var(--green)">£4.38M/yr</div><div class="mc-sub">per 1MW container</div></div>
+        <div class="metric-card green"><div class="mc-label">Payer Saving</div><div class="mc-val" style="color:var(--green)">£52/yr</div><div class="mc-sub">per UK household</div></div>
+        <div class="metric-card blue"><div class="mc-label">Phase 1 Ask</div><div class="mc-val" style="color:var(--blue)">£150k</div><div class="mc-sub">NIA feasibility pathway</div></div>
       </div>
     </div>
 
   </div>
 
   <script>
-    // Tab Switching
+    // Tab Switching Logic
     function showSec(id, element) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       element.classList.add('active');
@@ -313,15 +349,21 @@
       window.scrollTo(0, 0);
     }
 
-    // Simulator
+    // Simulator Logic
     const slideWind = document.getElementById('slideWind'), slideLimit = document.getElementById('slideLimit');
+    const valWind = document.getElementById('valWind'), valLimit = document.getElementById('valLimit');
     const valCurt = document.getElementById('valCurt'), ticker = document.getElementById('ticker');
+    const rateHr = document.getElementById('rateHr'), rateYr = document.getElementById('rateYr');
     let totalBurn = 0;
 
     function update() {
-      let curt = Math.max(0, slideWind.value - slideLimit.value);
-      valWind.innerText = slideWind.value + " MW"; valLimit.innerText = slideLimit.value + " MW";
+      let w = parseInt(slideWind.value), l = parseInt(slideLimit.value);
+      let curt = Math.max(0, w - l);
+      valWind.innerText = w + " MW"; valLimit.innerText = l + " MW";
       valCurt.innerText = curt + " MW";
+      let costHr = curt * 150;
+      rateHr.innerText = "£" + costHr.toLocaleString() + "/hr";
+      rateYr.innerText = "£" + ((costHr * 8760) / 1000000).toFixed(1) + "M";
     }
     slideWind.oninput = update; slideLimit.oninput = update;
     setInterval(() => {
@@ -330,7 +372,7 @@
       ticker.innerText = "£" + totalBurn.toFixed(2);
     }, 100);
 
-    // Act 03 Toggle
+    // Act 03 Toggle Logic
     const btnOn = document.getElementById('btnOn'), btnOff = document.getElementById('btnOff');
     btnOn.onclick = () => {
       btnOn.classList.add('active'); btnOff.classList.remove('active');
@@ -338,6 +380,7 @@
       document.getElementById('bufferTitle').innerText = "PRODUCTIVE POWER";
       document.getElementById('bufferTitle').style.fill = "#00e5a0";
       document.getElementById('lineDrop').style.stroke = "#00e5a0";
+      document.getElementById('lineOut').style.stroke = "#00a2ff";
     };
     btnOff.onclick = () => {
       btnOn.classList.remove('active'); btnOff.classList.add('active');
@@ -345,9 +388,10 @@
       document.getElementById('bufferTitle').innerText = "WASTED ENERGY";
       document.getElementById('bufferTitle').style.fill = "#ff3d5a";
       document.getElementById('lineDrop').style.stroke = "#ff3d5a";
+      document.getElementById('lineOut').style.stroke = "#ff3d5a";
     };
 
-    // Act 04 Trigger
+    // Act 04 Trigger Logic
     document.getElementById('btnTrigger').onclick = () => {
       const bar = document.getElementById('transferBar');
       bar.style.transition = 'none'; bar.style.width = '0%';
